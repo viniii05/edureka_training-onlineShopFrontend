@@ -1,0 +1,27 @@
+<!-- src/app/pages/products/products.component.html -->
+<div class="product-container">
+  <h2 class="product-header">Our Products</h2>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-spinner">
+    <span>Loading...</span>
+  </div>
+
+  <!-- Products List -->
+  <div *ngIf="!loading && products.length > 0" class="product-list">
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-card-body">
+        <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-img">
+        <h5 class="product-name">{{ product.name }}</h5>
+        <p class="product-price">₹{{ product.price }}</p>
+        <p class="product-description">{{ product.description }}</p>
+        <a [routerLink]="['/product', product.id]" class="btn btn-primary">View Details</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="!loading && products.length === 0" class="no-products">
+    <span>No products available at the moment.</span>
+  </div>
+</div>

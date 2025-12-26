@@ -1,29 +1,33 @@
+// src/app/pages/products/products.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
+import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  standalone: true,
-  template: `
-<div class="container mt-4">
-  <div class="card mb-3" *ngFor="let p of products">
-    <div class="card-body">
-      <h5>{{p.name}}</h5>
-      <p>₹ {{p.price}}</p>
-      <a [routerLink]="['/product', p.id]" class="btn btn-sm btn-primary">View</a>
-    </div>
-  </div>
-</div>`,
-  imports: [CommonModule, RouterLink]
+  selector: 'app-products',
+  imports: [RouterLink, CommonModule],
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  products: Product[] = [];
+  products: Product[] = [];  // Holds the products fetched from the service
+  loading = true;  // Loading state for UI
 
-  constructor(private ps: ProductService) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.products = this.ps.getProducts();
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        console.log('Fetched products:', data); // Log the response to ensure data is received
+        this.products = data; // Bind the products to the component's property
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching products', err);
+        this.loading = false;
+      }
+    });
   }
 }
