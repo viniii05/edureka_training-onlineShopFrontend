@@ -7,7 +7,6 @@
     </div>
 
     <form [formGroup]="signupForm" (ngSubmit)="signUp()" novalidate>
-      <!-- Full Name Input -->
       <div class="mb-3 input-group">
         <label for="name" class="form-label">Full Name</label>
         <input
@@ -26,7 +25,6 @@
         </div>
       </div>
 
-      <!-- Mobile Number Input -->
       <div class="mb-3 input-group">
         <label for="mobileNumber" class="form-label">Mobile Number</label>
         <input
@@ -44,7 +42,6 @@
         </div>
       </div>
 
-      <!-- Email Input -->
       <div class="mb-3 input-group">
         <label for="email" class="form-label">Email address</label>
         <input
@@ -62,7 +59,6 @@
         </div>
       </div>
 
-      <!-- Password Input -->
       <div class="mb-3 input-group">
         <label for="password" class="form-label">Password</label>
         <input
@@ -80,11 +76,9 @@
         </div>
       </div>
 
-      <!-- Error and Success Messages -->
       <div *ngIf="error" class="error-message">{{ error }}</div>
       <div *ngIf="success" class="success-message">{{ success }}</div>
 
-      <!-- Submit Button -->
       <button
         type="submit"
         class="btn btn-primary mb-2 primary-btn"
@@ -95,7 +89,6 @@
       </button>
     </form>
 
-    <!-- Redirect to Login Page -->
     <a routerLink="/login">Already registered? Click to Login!!</a>
   </div>
 </div>

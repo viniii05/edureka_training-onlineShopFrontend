@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-otp-verification',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Import ReactiveFormsModule locally
+  imports: [CommonModule, ReactiveFormsModule], 
   templateUrl: './otp-verification.html',
   styleUrls: ['./otp-verification.css']
 })
@@ -23,11 +23,9 @@ export class OtpVerificationComponent implements OnInit {
   private router = inject(Router);
 
   ngOnInit(): void {
-    // Retrieve email from localStorage
     this.email = localStorage.getItem('email') || '';
 
     if (!this.email) {
-      // Handle the case where email is not found in localStorage
       this.error = 'Email is not available. Please try again.';
       return;
     }
@@ -37,7 +35,6 @@ export class OtpVerificationComponent implements OnInit {
     });
   }
 
-  // Convenience getter for form control
   get otp() { return this.otpForm.get('otp'); }
 
   onSubmit(): void {
@@ -59,8 +56,7 @@ export class OtpVerificationComponent implements OnInit {
 
   this.authService.verifyOtp(payload.email, payload.otp).subscribe({
     next: (res) => {
-      // Assuming the response is plain text, you can treat it like this
-      this.success = res;  // response from backend is plain text like "Registration successful"
+      this.success = res;  
       setTimeout(() => {
         this.router.navigate(['login']);
       }, 2000);
