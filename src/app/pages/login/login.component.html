@@ -1,5 +1,4 @@
-
-<!-- src/app/login/login.component.html -->
+<!-- 
 <div class="login-container">
   <div class="card">
     <div class="text-center">
@@ -8,7 +7,6 @@
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
-      <!-- Email -->
       <div class="mb-3 input-group">
         <label for="email" class="form-label">Email address</label>
         <input
@@ -29,7 +27,6 @@
         }
       </div>
 
-      <!-- Password -->
       <div class="mb-3 input-group">
         <label for="password" class="form-label">Password</label>
         <input
@@ -47,19 +44,81 @@
           </div>
         }
 
-        <!-- ➤ Forgot password link sits right under the password field -->
+        <div class="forgot-row">
+          <a routerLink="/forgot-password" class="forgot-link">Forgot password?</a>
+        </div>
+      </div>
+
+      @if (error)   { <p class="error-message">{{ error }}</p> }
+      @if (success) { <p class="success-message">{{ success }}</p> }
+
+      <button type="submit" class="btn btn-primary mb-2" [disabled]="loginForm.invalid || isSubmitting">
+        @if (isSubmitting) { <span>Logging in…</span> } @else { <span>Login</span> }
+      </button>
+    </form>
+
+    <a routerLink="/signup">New User? Click to sign up!!</a>
+  </div>
+</div> -->
+
+
+<div class="login-container">
+  <div class="card">
+    <div class="text-center">
+      <h1>Login</h1>
+      <h6>Please enter your email & password</h6>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Email -->
+      <div class="mb-3 input-group">
+        <label for="email" class="form-label">Email address</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
+        <div class="form-text">We'll never share your email with anyone else.</div>
+
+        <div *ngIf="email?.invalid && email?.touched" class="form-text text-warning">
+          <div *ngIf="email?.errors?.['required']">Email is required.</div>
+          <div *ngIf="email?.errors?.['email']">Invalid email format.</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3 input-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          id="password"
+          type="password"
+          class="form-control"
+          formControlName="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+        />
+        <div *ngIf="password?.invalid && password?.touched" class="form-text text-warning">
+          <div *ngIf="password?.errors?.['required']">Password is required.</div>
+          <div *ngIf="password?.errors?.['minlength']">At least 8 characters.</div>
+        </div>
+
+        <!-- Forgot password link -->
         <div class="forgot-row">
           <a routerLink="/forgot-password" class="forgot-link">Forgot password?</a>
         </div>
       </div>
 
       <!-- Messages -->
-      @if (error)   { <p class="error-message">{{ error }}</p> }
-      @if (success) { <p class="success-message">{{ success }}</p> }
+      <p *ngIf="error" class="error-message">{{ error }}</p>
+      <p *ngIf="success" class="success-message">{{ success }}</p>
 
       <!-- Submit -->
       <button type="submit" class="btn btn-primary mb-2" [disabled]="loginForm.invalid || isSubmitting">
-        @if (isSubmitting) { <span>Logging in…</span> } @else { <span>Login</span> }
+        <span *ngIf="isSubmitting">Logging in…</span>
+        <span *ngIf="!isSubmitting">Login</span>
       </button>
     </form>
 
